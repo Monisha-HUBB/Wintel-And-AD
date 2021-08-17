@@ -1,0 +1,191 @@
+Topic 1: Installing and Configuring Windows Server
+
+Assignment 1: 
+1.	Install Windows server 2012 R2 Core
+Ans
+Figure 1: Preparation for installation:
+1.Disconnect UPS Devices
+2.Backup your servers
+3.Disabled your virus protection software
+4.Run the windows Memory Diagnostic Tool
+5.Provide mass storage Drivers
+6.Be aware that Windows Firewall is on by Default 
+7.Prepare your AD environment with Windows Server 2008 R2 updates.
+   To prepare a Forest:
+	Log on to the schema master as a member of the Enterprise Admins, Schema Admins, or Domain Admins group.
+•	Copy the contents of the \support\adprep folder (note the new location) from the Windows Server 2008 R2 installation DVD to the schema master role holder
+•	Open a Command Prompt window, navigate to the Adprep folder, and run adprep /forestprep.
+•	If you plan to install a read-only domain controller (RODC), run adprep /rodcprep.
+•	Allow the operation to complete and the changes to replicate before performing the next procedure.
+                 To Prepare a domain
+	Log on to the infrastructure master as a member of the Domain Admins group.
+•	Copy the contents of the \support\adprep folder (note the new location) from the installation DVD to the infrastructure master role holder.
+•	Open a Command Prompt window, navigate to the Adprep folder, and run adprep /domainprep /gpprep.
+•	Allow the operation to complete and the changes to replicate.
+             Figure 2:Server Core option
+                       Some Modules cannot be installed which rely on the .NET Framework or managed Code.
+	Select option “Windows server webserver 2008(Server  Core installation)”.Type username as administrator and leave the password empty. Then, it will prompt for password change. Once done, command prompt will pop up. 
+•	Type in cmd - \windows\system32
+                                                     >cscriptt scregedit .wsf /cli
+                                                     >oclist 
+                                                     >start /w (Install the IIS which is not installed)
+
+Assignment 2: 
+1.	Activate the Windows server with activation Key xxxxxxxxxxxxxxxxxxx 
+
+1.	Open VAMT.
+2.	In the left-side pane, right-click the Product Keys node to open the Actions menu.
+3.	Click Add product keys to open the Add Product Keys dialog box.
+4.	In the Add Product Keys dialog box, select from one of the following methods to add product keys:
+o	To add product keys manually, click Enter product key(s) separated by line breaks, enter one or more product keys separated by line breaks, and click Add Key(s).
+o	To import a Comma Separated Values (CSV) file containing a list of product keys, click Select a product key file to import, browse to the file location, click Open to import the file, and then click Add Key(s).
+
+
+Topic 2: Understanding Storage in Windows Server
+
+Assignment 1:	
+1.	Using Disk 1, Disk 2 and Disk 3 create a spanned volume of 15 GB size
+
+•	Right-click Computer on desktop, choose "Management" and then click "Disk Management".
+•	Right-click the unallocated space, and then choose "New Volume".
+•	In the New Volume Wizard, click "Next", and choose "Spanned", and then click "Next".
+•	Choose the dynamic disks you want to use and specify the size you want for the volume, and click "Next", and then follow the instructions on your screen.
+
+Assignment 2:
+1.	Perform Error Checking on F: drive
+    
+Right click >properties> tool tab > check > scan drive – fix small problems
+Cmd as admin> chldsk F: /f /r /x – errors, repair,unmap volume > error “volume is in use” > type ‘Y’> Restart system 
+or
+F11 >troubleshoot >advanced >command prompt> chldsk F:  /f  /r   /x 
+
+Topic 3: Overview of Network Infrastructure
+
+Assignment 1:					 
+1.	Add a Host Entry into Hosts file. Xxx.xxx.xxx.xxx	xyz.abc.com
+1.	Open an elevated command prompt.
+2.	Type the following command, and then press ENTER:
+notepad %windir%\system32\drivers\etc\hosts
+3.	Lines that begin with a “#” are considered as comments in the file and are inactive. Add a “#” at the beginning of any lines with host entries you wish to inactivate, or delete the lines from the Hosts file.
+4.	When you have completed configuring the Hosts file, click File, click Save, and then close Notepad.
+
+Assignment 2:					
+1.	Using Windows Firewall with Advanced Security console enable firewall state for Domain, Private and Public Profile
+
+To configure these profiles, in the Windows Firewall with Advanced Security MMC snap-in, right-click Windows Firewall with Advanced Security, and then click Properties. You can also access the properties from the Action menu, the Action pane, or the center pane, when Windows Firewall with Advanced Security is highlighted.
+
+To configure these profiles using netsh, open an elevated command prompt (run as Administrator) and type netsh advfirewall set to see the commands available in this context.
+to turn the firewall on when the private profile is active, type:
+netsh advfirewall set privateprofile state on
+
+
+
+Topic 4: Microsoft Domain Name System (DNS)
+
+Assignment 1:
+1.	Create a Host record for Server1 in DNS with IP xxx.xxx.xxx.xxx along with its PTR record
+Using the Windows interface
+1.	Open DNS.
+2.	In the console tree, right-click the applicable reverse lookup zone.
+3.	On the Action menu, click New Pointer.
+4.	In the Host IP number text box, type the host IP address octet number.
+5.	In the Host name text box, type the fully qualified domain name for the DNS host computer for which this pointer record is to be used to provide reverse lookup (address-to-name resolution).
+As an option, you can click Browse to search the DNS namespace for hosts in this domain that have host (A) records already defined.
+6.	Click OK to add the new record to the zone.
+7.	To open DNS, click Start, click Control Panel, double-click Administrative Tools, and then double-click DNS.
+Using a command line
+1.	Open Command Prompt.
+2.	Type: dnscmd ServerName /RecordAdd ZoneNameNodeName [/Aging] [/OpenAcl] [Ttl] PTR HostName|DomainName
+
+
+Assignment 2:					
+1.	Create a conditional forwarder for Domain xyz.com with DNS IP xxx.xxx.xxx.xxx
+1.	Open DNS Manager. To open DNS Manager, click Start, point to Administrative Tools, and then click DNS.
+2.	In the console tree, double-click the applicable DNS server. Expand DNS, and then double-click Applicable DNS server.
+3.	In the console tree, click Conditional Forwarders, and then on the Action menu, click New conditional forwarder.
+4.	In DNS domain, type the fully qualified domain name (FQDN) of the domain for which you want to forward queries.
+5.	Click the IP addresses of the master servers list, type the IP address of the server to which you want to forward queries for the specified DNS domain, and then press ENTER.
+
+
+Topic 5: Active Directory Domain Services
+
+Assignment 1:					
+1.	Identify current Domain Functional Level
+The current domain functional level is displayed under Current domain functional level in the Raise domain functional level dialog box.
+To perform this procedure, you must be a member of the Domain Admins group or Enterprise Admins group in AD DS, or you must have been delegated the appropriate authority. As a security best practice, consider using Run as to perform this procedure. For more information, search for "using run as" in Help and Support.
+
+2.	Identify all FSMO role holders using command line
+
+Verify the roles have been moved by going to the Windows Server 2016 server, in Server Manager, under tools, select Active Directory Module for Windows PowerShell. Use the Get-ADDomain and Get-ADForest cmdlets to view theFSMO role holders
+
+Assignment 2:
+1.	Update the E-mail attribute value for User1 to user.1@abc.com
+
+Select Start, select Run, type ADSIEdit.msc, and then select OK.
+Right-click ADSI Edit in the navigation pane, select Connect to, and then select OK to load the domain partition.
+Locate the user object, right-click it, and then select Properties.
+In the Attributes list, locate the attribute that you want. Select Edit, and then edit the attribute value to the value that you want.
+Select OK two times, and then exit ADSI Edit.
+
+2.	Create a Domain Local Group under “ABC.com IndiaMumbaiGroups” OU
+•	Open Active directory.
+•	Locate the OU.
+•	Right click on “groups”, and right click > new >group.
+•	Check Domain local and check security or distribution according to the requirement and save it.
+
+
+3.	Save the Group policy TestGPO in HTML format
+
+PowerShellCopy
+PS C:\> Get-GPOReport -Name "TestGPO" -ReportType HTML -Path "C:\GPOReports\GPOReport.html"
+This command generates a report in HTML format for the GPO TestGPO and writes it to the file C:\GPOReports\GPOReport.html
+
+
+Topic 6: Monitoring Server Performance
+
+Assignment 1:					
+1.	Filter out last reboot event of serverA in event viewer
+Login to Windows Server.
+Launch the Event Viewer (type eventvwr in run).
+In the event viewer console expand Windows Logs.
+Click System and in the right pane click Filter Current Log.
+In the Filter Current log box, type 1074 as the event ID. This will filter the events and you will see events only with ID 1074.
+We can now see the event with ID 1074.
+Double click the recent event. In the event properties box, you can see the person who initiated the restart of server.
+Assignment 2:					
+1.	Check the page file configuration is set manually or System managed
+
+Right-click the My Computer or This PC icon on your desktop or in File Explorer.
+Select Properties.
+In the System Properties window, click Advanced System Settings and then click the Advanced tab.
+On the Advanced tab, click the Settings button under Performance.
+In Performance Options, click the Advanced tab and then click the Change button.
+To manually set , In the Virtual Memory window, uncheck the box for Automatically manage Paging file size for all drives, if checked.
+
+Topic 7: Overview of High availability and Clustering
+
+Assignment 1:					
+1.	Set the maintenance mode enabled for Node2 on cluster
+
+ 
+
+To turn maintenance mode on, on one of the nodes in the cluster run:
+rladmin node <node_id> maintenance_mode on
+After all of the shards and endpoints are moved from the node, it is safe to do maintenance on the server if there are enough nodes up to maintain the quorum.
+
+
+Assignment 2:					
+
+1.	Add Node1 and Node 2 to NLB cluster using below details
+•	NLB cluster name – WINDOWSNLB
+•	NLB IP – xxx.xxx.xxx.xxx
+2.	Add-NlbClusterNodeDip
+Adds a dedicated IP address to a Network Load Balancing (NLB) cluster
+
+Node 2:
+Get-NlbClusterNode node2 | Add-NlbClusterNodeDip xxx.xxx.xxx.xxx 
+Node                    IPAddress                  SubnetMask 
+----                       ---------                        ---------- 
+node2                 xxx.xxx.xxx.xxx
+
+•	Multicast
